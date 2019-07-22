@@ -2532,6 +2532,63 @@ class PivxTestnet(Pivx):
     TX_PER_BLOCK = 2
     RPC_PORT = 51472
 
+class Wagerr(Coin):
+    NAME = "Wagerr"
+    SHORTNAME = "WGR"
+    NET = "mainnet"
+    XPUB_VERBYTES = bytes.fromhex("022D2533")
+    XPRV_VERBYTES = bytes.fromhex("0221312B")
+    P2PKH_VERBYTE = bytes.fromhex("49")
+    P2SH_VERBYTES = [bytes.fromhex("3F")]
+    WIF_BYTE = bytes.fromhex("C7")
+    GENESIS_HASH = ('000007b9191bc7a17bfb6cedf96a8dac'
+                    'ebb5730b498361bf26d44a9f9dcc1079')
+    BASIC_HEADER_SIZE = 80
+    HDR_V4_SIZE = 112
+    HDR_V4_HEIGHT = 700
+    HDR_V4_START_OFFSET = HDR_V4_HEIGHT * BASIC_HEADER_SIZE
+    TX_COUNT = 1576741
+    TX_COUNT_HEIGHT = 732900
+    TX_PER_BLOCK = 2
+    RPC_PORT = 55003
+
+    @classmethod
+    def static_header_offset(cls, height):
+        assert cls.STATIC_BLOCK_HEADERS
+        if height >= cls.HDR_V4_HEIGHT:
+            relative_v4_offset = (height - cls.HDR_V4_HEIGHT) * cls.HDR_V4_SIZE
+            return cls.HDR_V4_START_OFFSET + relative_v4_offset
+        else:
+            return height * cls.BASIC_HEADER_SIZE
+
+    @classmethod
+    def header_hash(cls, header):
+        version, = util.unpack_le_uint32_from(header)
+        if version >= 4:
+            return super().header_hash(header)
+        else:
+            import quark_hash
+            return quark_hash.getPoWHash(header)
+
+
+class WagerrTestnet(Pivx):
+    SHORTNAME = "tWGR"
+    NET = "testnet"
+    XPUB_VERBYTES = bytes.fromhex("3A8061A0")
+    XPRV_VERBYTES = bytes.fromhex("3A805837")
+    P2PKH_VERBYTE = bytes.fromhex("41")
+    P2SH_VERBYTES = [bytes.fromhex("7d")]
+    WIF_BYTE = bytes.fromhex("b1")
+    GENESIS_HASH = (
+        '00000fdc268f54ff1368703792dc046b1356e60914c2b5b6348032144bcb2de5')
+    BASIC_HEADER_SIZE = 80
+    HDR_V4_SIZE = 112
+    HDR_V4_HEIGHT = 50
+    HDR_V4_START_OFFSET = HDR_V4_HEIGHT * BASIC_HEADER_SIZE
+    TX_COUNT = 227380
+    TX_COUNT_HEIGHT = 93286
+    TX_PER_BLOCK = 2
+    RPC_PORT = 55005
 
 class Bitg(Coin):
 
