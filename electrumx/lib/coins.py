@@ -2571,7 +2571,7 @@ class Wagerr(Coin):
             return quark_hash.getPoWHash(header)
 
 
-class WagerrTestnet(Pivx):
+class WagerrTestnet(Wagerr):
     SHORTNAME = "tWGR"
     NET = "testnet"
     XPUB_VERBYTES = bytes.fromhex("3A8061A0")
