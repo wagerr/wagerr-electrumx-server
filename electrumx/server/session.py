@@ -1326,6 +1326,12 @@ class ElectrumX(SessionBase):
         self.bump_cost(1.0)
         return await self.daemon_request('getrawtransaction', tx_hash, verbose)
 
+    async def event_list(self):
+        '''Return the list of events
+
+        '''
+        return await self.daemon_request('listevents')
+
     async def transaction_merkle(self, tx_hash, height):
         '''Return the merkle branch to a confirmed transaction given its hash
         and height.
@@ -1389,6 +1395,7 @@ class ElectrumX(SessionBase):
             'blockchain.transaction.get_merkle': self.transaction_merkle,
             'blockchain.transaction.id_from_pos': self.transaction_id_from_pos,
             'mempool.get_fee_histogram': self.mempool.compact_fee_histogram,
+            'blockchain.event.list': self.event_list,
             'server.add_peer': self.add_peer,
             'server.banner': self.banner,
             'server.donation_address': self.donation_address,
