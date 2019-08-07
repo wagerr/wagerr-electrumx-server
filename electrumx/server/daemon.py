@@ -265,6 +265,10 @@ class Daemon(object):
         # Convert hex strings to bytes
         return [hex_to_bytes(tx) if tx else None for tx in txs]
 
+    async def get_events_list(self):
+        '''Return events list'''
+        return await self._send_single('listevents')
+
     async def broadcast_transaction(self, raw_tx):
         '''Broadcast a transaction to the network.'''
         return await self._send_single('sendrawtransaction', (raw_tx, ))

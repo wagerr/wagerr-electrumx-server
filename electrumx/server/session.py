@@ -1330,7 +1330,7 @@ class ElectrumX(SessionBase):
         '''Return the list of events
 
         '''
-        return await self.daemon_request('listevents')
+        return await self.daemon_request('get_events_list')
 
     async def transaction_merkle(self, tx_hash, height):
         '''Return the merkle branch to a confirmed transaction given its hash
