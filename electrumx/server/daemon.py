@@ -268,6 +268,10 @@ class Daemon(object):
     async def get_events_list(self):
         '''Return events list'''
         return await self._send_single('listevents')
+    
+    async def getbet(self, hex_hash):
+        '''Return bet details'''
+        return await self._send_single('getbet',(hex_hash,))
 
     async def broadcast_transaction(self, raw_tx):
         '''Broadcast a transaction to the network.'''

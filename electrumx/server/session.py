@@ -1326,6 +1326,15 @@ class ElectrumX(SessionBase):
         self.bump_cost(1.0)
         return await self.daemon_request('getrawtransaction', tx_hash, verbose)
 
+    async def bet_get(self, tx_hash):
+        '''Return the bet given its hash
+
+        tx_hash: the transaction hash as a hexadecimal string
+        '''
+        assert_tx_hash(tx_hash)
+
+        return await self.daemon_request('getbet', tx_hash)
+
     async def event_list(self):
         '''Return the list of events
 
@@ -1396,6 +1405,7 @@ class ElectrumX(SessionBase):
             'blockchain.transaction.id_from_pos': self.transaction_id_from_pos,
             'mempool.get_fee_histogram': self.mempool.compact_fee_histogram,
             'blockchain.event.list': self.event_list,
+            'blockchain.bet.get': self.bet_get,
             'server.add_peer': self.add_peer,
             'server.banner': self.banner,
             'server.donation_address': self.donation_address,
