@@ -5,7 +5,7 @@ setuptools.setup(
     name='electrumX',
     version=version,
     scripts=['electrumx_server', 'electrumx_rpc', 'electrumx_compact_history'],
-    python_requires='>=3.6',
+    python_requires='>=3.7',
     install_requires=['aiorpcX>=0.18.1,<0.19', 'attrs',
                       'plyvel', 'pylru', 'aiohttp>=3.3'],
     extras_require={
