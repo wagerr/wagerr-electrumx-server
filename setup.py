@@ -6,11 +6,11 @@ setuptools.setup(
     version=version,
     scripts=['electrumx_server', 'electrumx_rpc', 'electrumx_compact_history'],
     python_requires='>=3.7',
-    install_requires=['aiorpcX>=0.18.1,<0.19', 'attrs',
+    install_requires=['aiorpcX[ws]>=0.18.3,<0.19', 'attrs',
                       'plyvel', 'pylru', 'aiohttp>=3.3'],
     extras_require={
         'rocksdb': ['python-rocksdb>=0.6.9'],
-        'uvloop': ['uvloop>=0.12.2'],   # Bump when the uvloop connection_lost bug is fixed
+        'uvloop': ['uvloop>=0.14'],   # Bump when the uvloop connection_lost bug is fixed
         # For various coins
         'blake256': ['blake256>=0.1.1'],
         'crypto': ['pycryptodomex>=3.8.1'],
