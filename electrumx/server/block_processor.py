@@ -211,9 +211,8 @@ class BlockProcessor(object):
         chain = [self.tip] + [self.coin.header_hash(h) for h in headers[:-1]]
 
 
-        if hprevs[0] != chain[0]:
-            await self.reorg_chain()
-        elif hprevs == chain:
+        
+        if hprevs == chain:
             start = time.time()
             await self.run_in_thread_with_lock(self.advance_blocks, blocks)
             await self._maybe_flush()
@@ -225,6 +224,8 @@ class BlockProcessor(object):
             if self._caught_up_event.is_set():
                 await self.notifications.on_block(self.touched, self.height)
             self.touched = set()
+        elif hprevs[0] != chain[0]:
+            await self.reorg_chain()
         else:
             # It is probably possible but extremely rare that what
             # bitcoind returns doesn't form a chain because it
