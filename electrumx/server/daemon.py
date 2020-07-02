@@ -271,7 +271,7 @@ class Daemon(object):
     
     async def getbet(self, hex_hash):
         '''Return bet details'''
-        return await self._send_single('getbet',(hex_hash,))
+        return await self._send_single('getbetbytxid',(hex_hash,))
 
     async def broadcast_transaction(self, raw_tx):
         '''Broadcast a transaction to the network.'''
