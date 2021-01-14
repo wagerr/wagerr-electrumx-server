@@ -2548,6 +2548,7 @@ class Wagerr(Coin):
     HDR_V4_HEIGHT = 1
     HDR_V7_HEIGHT = 1501000
     HDR_V4_START_OFFSET = HDR_V4_HEIGHT * BASIC_HEADER_SIZE
+    HDR_V7_START_OFFSET = HDR_V4_START_OFFSET + ((HDR_V7_HEIGHT-1) * HDR_V4_SIZE)
     TX_COUNT = 1576741
     TX_COUNT_HEIGHT = 732900
     TX_PER_BLOCK = 2
@@ -2556,7 +2557,10 @@ class Wagerr(Coin):
     @classmethod
     def static_header_offset(cls, height):
         assert cls.STATIC_BLOCK_HEADERS
-        if height >= cls.HDR_V4_HEIGHT and height < cls.HDR_V7_HEIGHT:
+        if height >= cls.HDR_V7_HEIGHT:
+            relative_v7_offset = (height - cls.HDR_V7_HEIGHT) * cls.BASIC_HEADER_SIZE
+            return cls.HDR_V7_START_OFFSET + relative_v7_offset
+        elif height >= cls.HDR_V4_HEIGHT:
             relative_v4_offset = (height - cls.HDR_V4_HEIGHT) * cls.HDR_V4_SIZE
             return cls.HDR_V4_START_OFFSET + relative_v4_offset
         else:
